@@ -38,9 +38,6 @@ for dumind=1:lenind
     validation_index=struct('tableK',{});    
     for dumt=1:lentp
         signals=zeros(totlen,1);
-        positions=zeros(totlen,1);
-        points=zeros(totlen,1);
-        returns=zeros(totlen,1);
         bestparas=indicator_para(dumt).bestparas;
         try
             for dumi=1:monthlen                

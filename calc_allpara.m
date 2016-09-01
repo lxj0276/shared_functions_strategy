@@ -14,7 +14,7 @@ for dumi=1:paranum
         continue;
     end
     paras=allparas(dumi,:);
-    [signals,positions]=func(data,paras,skip,type);
+    [signals,positions]=func(data,paras,skip,type,1);
     [returns,netval,points]=earnings_general_open(positions,signals,opnprc,clsprc,tscost);
     tableK=array2table([date signals,positions,points,returns,netval],'VariableNames',...
         {'date','signals','positions','points','returns','netval'});

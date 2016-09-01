@@ -1,3 +1,4 @@
+%% in sample validation 月末强平
 function[errors]=insample_validation(indices,types,type,tscost,skips,trains,ends,windowsize,func)
 %用每月最优参数计算的最优结果
 temp=load('bestpara_all');
@@ -50,22 +51,22 @@ for dumind=1:lenind
                 tail=monthend(dumi);
                 toskip=trddate(head);
                 theparas=bestparas(dumi+1,:); %当月使用当月计算的最有参数，bestpara的第一行为training数据的最优参数
-                [monsigs,monpos]=func(trddata(head-windowsize:tail,:),theparas,toskip,type); %加windowsize是为了保证提取数据足够长，用以计算
-                opnprc=trddata(head-windowsize:tail,2);
-                clsprc=trddata(head-windowsize:tail,5);
+                [monsigs,monpos]=func(trddata(head-windowsize:tail,:),theparas,toskip,type,0); %加windowsize是为了保证提取数据足够长，用以计算
+                opnprc=trddata(head:tail,2);
+                clsprc=trddata(head:tail,5);
                 [monrets,~,monpts]=earnings_general_open(monpos,monsigs,opnprc,clsprc,tscost);
                 posidx=(head-firstlen):(tail-firstlen);
-                diff=tail-head;
-                signals(posidx)  =monsigs(end-diff:end);
-                positions(posidx)=monpos(end-diff:end);
-                returns(posidx)  =monrets(end-diff:end);
-                points(posidx)   =monpts(end-diff:end);
+                %diff=tail-head;
+                signals(posidx)  =monsigs;%(end-diff:end);
+                positions(posidx)=monpos;%(end-diff:end);
+                returns(posidx)  =monrets;%(end-diff:end);
+                points(posidx)   =monpts;%(end-diff:end);
             end
         catch
             errors(dumt,dumind)=1;
         end
         netval=cumprod(1+returns); %净值未分段，不是整体，因而需要通过收益率重新计算
-        tableK=array2table([validate signals,positions,points,returns,netval],'VariableNames',...
+        tableK=array2table([validate,signals,positions,points,returns,netval],'VariableNames',...
             {'date','signals','positions','points','returns','netval'});
         indicators=validation_indicators(tableK);
         tmptb=[tableK indicators];

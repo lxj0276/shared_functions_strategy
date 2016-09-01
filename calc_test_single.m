@@ -4,7 +4,7 @@ opnprc=data(:,2);
 clsprc=data(:,5);
 start=find(date>=skip,1);
 
-[signals,positions]=func(data,paras,skip,type);
+[signals,positions]=func(data,paras,skip,type,1);
 [returns,netval,points]=earnings_general_open(positions,signals,opnprc(start:end),clsprc(start:end),tscost);
 tableK=array2table([date(start:end) signals,positions,points,returns,netval],'VariableNames',...
     {'date','signals','positions','points','returns','netval'});

@@ -4,7 +4,7 @@ tic
 lenind=length(indices);
 lentp=length(types);
 
-valresults=struct('index',[]);
+valresults=zeros(lentp,3*lenind);
 idxresults=zeros(lentp,lenind);
 for dumi =1:lenind
     
@@ -36,6 +36,8 @@ for dumi =1:lenind
         vals=table2array(currentK(end,{'annret','maxdd','sharp'}));        
         results(dumk,:)=vals;
     end
-    valresults(dumi).index=array2table(results,'VariableNames',{'annret','maxdd','sharp'});
+    head=(dumi-1)*3+1;
+    tail=dumi*3;
+    valresults(:,head:tail)=results;
 end
 toc

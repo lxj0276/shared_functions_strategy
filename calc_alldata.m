@@ -18,7 +18,7 @@ for dumi=1:lenind
         parasdata=NaN;
         errors(dumi)=1;
     end
-    save(strcat('alldata',indices{dumi}),'parasdata');
+    save(strcat('alldata',indices{dumi}),'parasdata','-v7.3');
 end
 toc
 

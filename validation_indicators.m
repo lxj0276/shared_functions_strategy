@@ -9,13 +9,16 @@ averet=cumsum(Kreturns);
 maxdds=zeros(len-1,1);
 maxdraw=zeros(len,1);
 maxret=-inf;
+sumret=Kreturns(1);
 for dum_i=2:len
     if Knetval(dum_i)>maxret
         maxret=Knetval(dum_i);
     end
     maxdds(dum_i-1)=Knetval(dum_i)/maxret-1;
     maxdraw(dum_i)=min(maxdds(1:(dum_i-1)));
-    vols(dum_i)=std(Kreturns(1:dum_i));
+    sumret=sumret+Kreturns(dum_i);
+    vols(dum_i)=sqrt(sum((Kreturns(1:dum_i)-sumret/dum_i).^2)/(dum_i-1));
+    %     vols(dum_i)=std(Kreturns(1:dum_i));
     averet(dum_i)=averet(dum_i)/dum_i;
 end
 maxdd=maxdraw;
